@@ -113,10 +113,9 @@ export default function ApplicationForm() {
       <Button
         type="submit"
         label="Enviar Intenção"
-        icon="pi pi-check"
         loading={loading}
         disabled={loading}
-        className="w-full justify-center text-gray-700"
+        className="w-full"
       />
     </form>
   );

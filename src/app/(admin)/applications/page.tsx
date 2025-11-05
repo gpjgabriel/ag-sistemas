@@ -3,7 +3,7 @@ import React from "react";
 
 export default function AdminApplicationsPage() {
   return (
-    <main className="p-6 md:p-12">
+    <main className="min-h-screen p-6 md:p-12">
       <header className="mb-8">
         <h1 className="text-3xl font-bold">Gestão de Aplicações</h1>
         <p className="text-gray-600">
@@ -11,7 +11,7 @@ export default function AdminApplicationsPage() {
         </p>
       </header>
 
-      <div className="bg-white p-4 rounded-lg shadow-md">
+      <div className="w-full bg-white p-4 rounded-lg shadow-md overflow-x-auto">
         <ApplicationList />
       </div>
     </main>

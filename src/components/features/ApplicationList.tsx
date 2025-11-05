@@ -82,16 +82,15 @@ export default function ApplicationList() {
         <Button
           icon="pi pi-check"
           label="Aprovar"
-          severity="success"
           onClick={() => handleUpdate(rowData.id, "APPROVED")}
-          className="p-button-sm"
+          size="small"
         />
         <Button
           icon="pi pi-times"
           label="Recusar"
           severity="danger"
           onClick={() => handleUpdate(rowData.id, "REJECTED")}
-          className="p-button-sm"
+          size="small"
         />
       </div>
     );

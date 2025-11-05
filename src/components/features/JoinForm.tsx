@@ -59,7 +59,7 @@ export default function JoinForm({
         <label htmlFor="email" className="font-semibold">
           Email
         </label>
-        <InputText id="email" value={email} disabled />
+        <InputText id="email" value={email} disabled className="w-full" />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -96,7 +96,7 @@ export default function JoinForm({
         type="submit"
         label="Finalizar Cadastro"
         loading={loading}
-        className="w-full justify-center"
+        className="w-full"
       />
     </form>
   );

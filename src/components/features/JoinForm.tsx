@@ -50,7 +50,11 @@ export default function JoinForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6"
+      data-testid="join-form"
+    >
       <div className="flex flex-col gap-2">
         <label htmlFor="email" className="font-semibold">
           Email
@@ -76,7 +80,7 @@ export default function JoinForm({
           Crie uma Senha
         </label>
         <Password
-          id="password"
+          inputId="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required

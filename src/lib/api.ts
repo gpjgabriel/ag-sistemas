@@ -45,3 +45,28 @@ export const updateApplicationStatus = async (
   }
   return res.json();
 };
+
+export const validateInviteToken = async (token: string) => {
+  const res = await fetch(`/api/join/${token}`);
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Falha ao validar convite");
+  }
+  return res.json();
+};
+
+export const completeRegistration = async (token: string, data: any) => {
+  const res = await fetch(`/api/join/${token}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Falha ao finalizar cadastro");
+  }
+  return res.json();
+};

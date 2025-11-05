@@ -1,12 +1,14 @@
+// src/app/api/admin/applications/[id]/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   try {
-    const { id } = params;
     const { status } = await request.json();
 
     if (status !== "APPROVED" && status !== "REJECTED") {
@@ -33,7 +35,6 @@ export async function PATCH(
         );
       }
 
-      // Cria o convite
       const invite = await prisma.invite.create({
         data: {
           email: application.email,
@@ -42,15 +43,12 @@ export async function PATCH(
         },
       });
 
-      // Atualiza a aplicação
       updatedApplication = await prisma.application.update({
         where: { id },
         data: { status: "APPROVED" },
       });
 
-      // Simula envio de email
       const inviteLink = `http://localhost:3000/join/${invite.token}`;
-      console.log(`==== LINK DE CONVITE GERADO ====`);
       console.log(`Para: ${invite.email}`);
       console.log(`Link: ${inviteLink}`);
     } else {
@@ -67,11 +65,12 @@ export async function PATCH(
       error.meta?.target?.includes("applicationId")
     ) {
       return NextResponse.json(
-        { error: "Já existe um convite para esta aplicação" },
+        { error: "Um convite para esta aplicação já existe" },
         { status: 409 }
       );
     }
-    console.error(`Erro ao atualizar aplicação ${params.id}:`, error);
+
+    console.error(`Erro ao atualizar aplicação ${id}:`, error);
     return NextResponse.json(
       { error: "Erro interno do servidor" },
       { status: 500 }

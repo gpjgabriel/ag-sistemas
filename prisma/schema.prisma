@@ -1,0 +1,85 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Tabela para o formulário público de intenção
+model Application {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  company   String
+  reason    String
+  status    String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt DateTime @default(now())
+
+  invites Invite[] // Relação para o convite
+}
+
+// Tabela de usuários (Membros e Admins)
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  role          String    @default("MEMBER") // MEMBER, ADMIN
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  
+  invitation    Invite?   @relation(fields: [inviteId], references: [id])
+  inviteId      String?   @unique
+
+  sentReferrals Referral[] @relation("SentBy")
+  receivedReferrals Referral[] @relation("ReceivedBy")
+  thanksSent    ThankYou[] @relation("ThanksFrom")
+  thanksReceived ThankYou[] @relation("ThanksTo")
+}
+
+// Tabela para o convite de cadastro completo
+model Invite {
+  id          String      @id @default(uuid())
+  token       String      @unique @default(cuid())
+  email       String
+  status      String      @default("PENDING") // PENDING, COMPLETED
+  expiresAt   DateTime
+  createdAt   DateTime    @default(now())
+  
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String      @unique // Aplicação só pode ter 1 convite
+
+  user        User?
+}
+
+// Tabela para o sistema de indicações (Opcional A)
+model Referral {
+  id           String   @id @default(uuid())
+  description  String // Descrição da Oportunidade
+  clientName   String // Empresa/Contato Indicado
+  status       String   @default("NEW") // NEW, CONTACTED, CLOSED, REJECTED
+  createdAt    DateTime @default(now())
+
+  sentBy       User     @relation("SentBy", fields: [sentById], references: [id])
+  sentById     String
+
+  receivedBy   User     @relation("ReceivedBy", fields: [receivedById], references: [id])
+  receivedById String // Membro Indicado
+}
+
+// Tabela para "Obrigados"
+model ThankYou {
+  id        String   @id @default(uuid())
+  amount    Float // Valor do negócio fechado
+  message   String
+  createdAt DateTime @default(now())
+
+  from      User     @relation("ThanksFrom", fields: [fromId], references: [id])
+  fromId    String
+
+  to        User     @relation("ThanksTo", fields: [toId], references: [id])
+  toId      String
+}

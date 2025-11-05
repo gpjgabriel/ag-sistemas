@@ -70,3 +70,31 @@ export const completeRegistration = async (token: string, data: any) => {
   }
   return res.json();
 };
+
+type ReferralData = {
+  receivedById: string;
+  clientName: string;
+  description: string;
+};
+
+export const createReferral = async (data: ReferralData) => {
+  const res = await fetch("/api/referrals", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Falha ao enviar a indicação");
+  }
+  return res.json();
+};
+
+export const getActiveMembers = async () => {
+  const res = await fetch("/api/users");
+  if (!res.ok) {
+    throw new Error("Falha ao buscar a lista de membros");
+  }
+  return res.json();
+};

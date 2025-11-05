@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { Message } from "primereact/message";
+import { submitApplication } from "@/lib/api";
 
 export default function ApplicationForm() {
   const [name, setName] = useState("");
@@ -20,6 +21,21 @@ export default function ApplicationForm() {
     setLoading(true);
     setError(null);
     setSuccess(false);
+
+    try {
+      const data = { name, email, company, reason };
+      await submitApplication(data);
+
+      setSuccess(true);
+      setName("");
+      setEmail("");
+      setCompany("");
+      setReason("");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (success) {
@@ -32,9 +48,13 @@ export default function ApplicationForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6"
+      data-testid="application-form"
+    >
       <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="font-semibold">
+        <label htmlFor="name" className="font-semibold text-gray-700">
           Nome Completo
         </label>
         <InputText
@@ -47,7 +67,7 @@ export default function ApplicationForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="font-semibold">
+        <label htmlFor="email" className="font-semibold text-gray-700">
           Email
         </label>
         <InputText
@@ -61,7 +81,7 @@ export default function ApplicationForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="company" className="font-semibold">
+        <label htmlFor="company" className="font-semibold text-gray-700">
           Empresa
         </label>
         <InputText
@@ -74,7 +94,7 @@ export default function ApplicationForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="reason" className="font-semibold">
+        <label htmlFor="reason" className="font-semibold text-gray-700">
           Por que você quer participar?
         </label>
         <InputTextarea
@@ -96,7 +116,7 @@ export default function ApplicationForm() {
         icon="pi pi-check"
         loading={loading}
         disabled={loading}
-        className="w-full justify-center"
+        className="w-full justify-center text-gray-700"
       />
     </form>
   );

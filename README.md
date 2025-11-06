@@ -85,10 +85,10 @@ Execute as "migrations" do Prisma para criar todas as tabelas no seu banco de da
 npx prisma migrate dev
 ```
 
-(Opcional, se você criar um seed) Popule o banco com dados de teste:
+Popule o banco com dados de teste:
 
 ```bash
-npx prisma db seed
+npm run seed
 ```
 
 Executar o Projeto:

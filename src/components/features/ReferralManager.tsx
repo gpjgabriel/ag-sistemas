@@ -47,7 +47,7 @@ const statusClasses: { [key in ReferralStatus]: string } = {
   REJECTED: "bg-red-100 text-red-800",
 };
 
-const CURRENT_USER_ID = "3d251b00-3c81-438e-a20c-a08be0a62b01"; // ID do usuário Teste
+const CURRENT_USER_ID = process.env.NEXT_PUBLIC_SIMULATED_USER_ID || "";
 
 export default function ReferralManager() {
   const [allReferrals, setAllReferrals] = useState<FullReferral[]>([]);

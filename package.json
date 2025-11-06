@@ -10,7 +10,8 @@
     "tailwind:init": "tailwindcss init -p",
     "test": "jest",
     "db:generate": "npx dotenv -e .env -- npx prisma generate",
-    "db:migrate": "npx dotenv -e .env -- echo 'Environment loaded!' && npx prisma migrate dev"
+    "db:migrate": "npx dotenv -e .env -- echo 'Environment loaded!' && npx prisma migrate dev",
+    "seed": "npx dotenv -e .env -- ts-node --compiler-options '{\\\"module\\\":\\\"CommonJS\\\"}' prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",

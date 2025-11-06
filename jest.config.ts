@@ -1,13 +1,14 @@
-// jest.config.ts
-import type { Config } from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
-  testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  coverageProvider: 'v8',
+  preset: "ts-jest",
+  testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  coverageProvider: "v8",
   clearMocks: false,
   moduleNameMapper: {
-    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+    "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
 };
 

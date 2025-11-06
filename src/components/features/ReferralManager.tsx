@@ -139,45 +139,47 @@ export default function ReferralManager() {
   );
 
   return (
-    <TabView
-      activeIndex={activeIndex}
-      onTabChange={(e) => setActiveIndex(e.index)}
-    >
-      <TabPanel header={`Recebidas (${receivedReferrals.length})`}>
-        <p className="mb-4 text-gray-700">
-          Estas são as indicações que você deve acompanhar e atualizar.
-        </p>
-        <DataTable
-          value={receivedReferrals}
-          loading={loading}
-          dataKey="id"
-          emptyMessage="Nenhuma indicação recebida."
-          data-testid="referral-table"
-        >
-          <Column field="sentBy.name" header="Enviado Por" />
-          <Column field="clientName" header="Contato/Empresa" />
-          <Column field="description" header="Detalhes" />
-          <Column header="Status" body={statusEditTemplate} />
-        </DataTable>
-      </TabPanel>
-
-      <TabPanel header={`Enviadas (${sentReferrals.length})`}>
-        <p className="mb-4 text-gray-700">
-          Acompanhe o status das indicações que você gerou.
-        </p>
-        <DataTable
-          value={sentReferrals}
-          loading={loading}
-          dataKey="id"
-          emptyMessage="Nenhuma indicação enviada."
-        >
-          <Column field="receivedBy.name" header="Membro Recebendo" />
-          <Column field="clientName" header="Contato/Empresa" />
-          <Column field="description" header="Detalhes" />
-          <Column field="status" header="Status" body={statusBodyTemplate} />
-        </DataTable>
-      </TabPanel>
+    <>
       <Toast ref={toast} />
-    </TabView>
+      <TabView
+        activeIndex={activeIndex}
+        onTabChange={(e) => setActiveIndex(e.index)}
+      >
+        <TabPanel header={`Recebidas (${receivedReferrals.length})`}>
+          <p className="mb-4 text-gray-700">
+            Estas são as indicações que você deve acompanhar e atualizar.
+          </p>
+          <DataTable
+            value={receivedReferrals}
+            loading={loading}
+            dataKey="id"
+            emptyMessage="Nenhuma indicação recebida."
+            data-testid="referral-table"
+          >
+            <Column field="sentBy.name" header="Enviado Por" />
+            <Column field="clientName" header="Contato/Empresa" />
+            <Column field="description" header="Detalhes" />
+            <Column header="Status" body={statusEditTemplate} />
+          </DataTable>
+        </TabPanel>
+
+        <TabPanel header={`Enviadas (${sentReferrals.length})`}>
+          <p className="mb-4 text-gray-700">
+            Acompanhe o status das indicações que você gerou.
+          </p>
+          <DataTable
+            value={sentReferrals}
+            loading={loading}
+            dataKey="id"
+            emptyMessage="Nenhuma indicação enviada."
+          >
+            <Column field="receivedBy.name" header="Membro Recebendo" />
+            <Column field="clientName" header="Contato/Empresa" />
+            <Column field="description" header="Detalhes" />
+            <Column field="status" header="Status" body={statusBodyTemplate} />
+          </DataTable>
+        </TabPanel>
+      </TabView>
+    </>
   );
 }

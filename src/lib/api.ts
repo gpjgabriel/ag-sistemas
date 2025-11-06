@@ -125,3 +125,19 @@ export const updateReferralStatus = async (
   }
   return res.json();
 };
+
+export const getDashboardStats = async () => {
+  const res = await fetch("/api/dashboard/stats");
+  if (!res.ok) {
+    throw new Error("Falha ao buscar estatísticas do dashboard");
+  }
+  return res.json();
+};
+
+export const getDashboardChartData = async () => {
+  const res = await fetch("/api/dashboard/charts");
+  if (!res.ok) {
+    throw new Error("Falha ao buscar dados do gráfico");
+  }
+  return res.json();
+};

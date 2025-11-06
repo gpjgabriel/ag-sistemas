@@ -52,6 +52,7 @@ const CURRENT_USER_ID = "3d251b00-3c81-438e-a20c-a08be0a62b01"; // ID do usuári
 export default function ReferralManager() {
   const [allReferrals, setAllReferrals] = useState<FullReferral[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -130,16 +131,18 @@ export default function ReferralManager() {
     );
   };
 
-  const sentReferrals = allReferrals.filter(
+  const sentReferrals = (allReferrals || []).filter(
     (r) => r.sentBy.id === CURRENT_USER_ID
   );
-  const receivedReferrals = allReferrals.filter(
+  const receivedReferrals = (allReferrals || []).filter(
     (r) => r.receivedBy.id === CURRENT_USER_ID
   );
 
   return (
-    <TabView>
-      <Toast ref={toast} />
+    <TabView
+      activeIndex={activeIndex}
+      onTabChange={(e) => setActiveIndex(e.index)}
+    >
       <TabPanel header={`Recebidas (${receivedReferrals.length})`}>
         <p className="mb-4 text-gray-700">
           Estas são as indicações que você deve acompanhar e atualizar.
@@ -149,6 +152,7 @@ export default function ReferralManager() {
           loading={loading}
           dataKey="id"
           emptyMessage="Nenhuma indicação recebida."
+          data-testid="referral-table"
         >
           <Column field="sentBy.name" header="Enviado Por" />
           <Column field="clientName" header="Contato/Empresa" />
@@ -173,6 +177,7 @@ export default function ReferralManager() {
           <Column field="status" header="Status" body={statusBodyTemplate} />
         </DataTable>
       </TabPanel>
+      <Toast ref={toast} />
     </TabView>
   );
 }

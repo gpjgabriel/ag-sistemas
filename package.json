@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "tailwind:init": "tailwindcss init -p",
-    "test": "jest"
+    "test": "jest",
+    "db:generate": "npx dotenv -e .env -- npx prisma generate",
+    "db:migrate": "npx dotenv -e .env -- echo 'Environment loaded!' && npx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",

@@ -27,6 +27,7 @@ model User {
   id            String    @id @default(uuid())
   name          String
   email         String    @unique
+  company       String?    // A empresa do membro
   role          String    @default("MEMBER") // MEMBER, ADMIN
   active        Boolean   @default(true)
   createdAt     DateTime  @default(now())

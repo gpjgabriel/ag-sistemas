@@ -125,12 +125,7 @@ export default function ReferralForm() {
 
       {error && <Message severity="error" text={error} />}
 
-      <Button
-        type="submit"
-        label="Enviar Indicação"
-        icon="pi pi-send"
-        loading={loading}
-      />
+      <Button type="submit" label="Enviar Indicação" loading={loading} />
     </form>
   );
 }

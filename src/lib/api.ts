@@ -98,3 +98,30 @@ export const getActiveMembers = async () => {
   }
   return res.json();
 };
+
+type ReferralStatus = "NEW" | "CONTACTED" | "CLOSED" | "REJECTED";
+
+export const getMemberReferrals = async (memberId: string) => {
+  const res = await fetch(`/api/referrals/${memberId}`);
+  if (!res.ok) {
+    throw new Error("Falha ao buscar indicações.");
+  }
+  return res.json();
+};
+
+export const updateReferralStatus = async (
+  referralId: string,
+  newStatus: ReferralStatus
+) => {
+  const res = await fetch(`/api/referrals/status/${referralId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ newStatus }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Falha ao atualizar status.");
+  }
+  return res.json();
+};

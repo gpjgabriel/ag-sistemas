@@ -2,89 +2,113 @@
 
 # Teste Técnico: Plataforma de Gestão de Networking
 
-O objetivo deste projeto é implementar uma plataforma para gestão de grupos de networking, substituindo controles manuais por um sistema centralizado.  
+O objetivo deste projeto é implementar uma plataforma para gestão de grupos de networking, substituindo controles manuais por um sistema centralizado.
 
-## Status do Projeto  
+## Status do Projeto
 
-- **Tarefa 1: Desenho da Arquitetura**  
-  - *Consulte o arquivo ARQUITETURA.md para detalhes completos sobre o design do sistema, modelo de dados e definições de API.  
+- **Tarefa 1: Desenho da Arquitetura**
+  - \*Consulte o arquivo ARQUITETURA.md para detalhes completos sobre o design do sistema, modelo de dados e definições de API.
 
-- **Tarefa 2: Implementação Prática**  
-  - [ ] Módulo Obrigatório: Fluxo de Admissão de Membros  
-  - [ ] Módulo Opcional: (Ainda não iniciado)  
-  - [ ] Testes (Unitários e Integração)  
-
----
-
-## 🚀 Stack Técnica  
-
-A stack deste projeto foi escolhida para atender aos requisitos obrigatórios e promover uma experiência de desenvolvimento moderna e unificada.  
-
-* **Framework Fullstack:** [Next.js](https://nextjs.org/) (com App Router)
-* **Frontend:** [React](https://react.dev/)
-* **Backend:** [Next.js API Routes](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) (Node.js)
-* **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/)
-* **ORM:** [Prisma](https://www.prisma.io/) (para interação segura e tipada com o DB)
-* **UI (Componentes):** [PrimeReact v10+](https://primereact.org/)
-* **UI (Estilização):** [Tailwind CSS](https://tailwindcss.com/)
-* **Testes:** [Jest](https://jestjs.io/) e [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- **Tarefa 2: Implementação Prática**
+  - [x] Arquitetura (ARQUITETURA.md)
+  - [x] Módulo Obrigatório: Fluxo de Admissão de Membros
+  - [x] Módulo Opcional: (A)
+  - [ ] Módulo Opcional: (B) : _Em desenvolvimento_
+  - [x] Testes (Unitários e Integração)
 
 ---
 
-## 🛠️ Instruções de Instalação e Execução  
+## 🚀 Stack Técnica
 
-Siga os passos abaixo para configurar e executar o projeto localmente.  
+A stack deste projeto foi escolhida para atender aos requisitos obrigatórios e promover uma experiência de desenvolvimento moderna e unificada.
 
-### 1. Pré-requisitos  
+- **Framework Fullstack:** [Next.js](https://nextjs.org/) (com App Router)
+- **Frontend:** [React](https://react.dev/)
+- **Backend:** [Next.js API Routes](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) (Node.js)
+- **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/)
+- **ORM:** [Prisma](https://www.prisma.io/) (para interação segura e tipada com o DB)
+- **UI (Componentes):** [PrimeReact v10+](https://primereact.org/)
+- **UI (Estilização):** [Tailwind CSS](https://tailwindcss.com/)
+- **Testes:** [Jest](https://jestjs.io/) e [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
--   [Node.js](https://nodejs.org/) (v18 ou superior)  
--   [Git](https://git-scm.com/)  
--   Um servidor PostgreSQL em execução.  
+---
 
-### 2. Clonar o Repositório  
+## 🛠️ Instruções de Instalação e Execução
 
-```bash  
-git clone [https://github.com/gpjgabriel/AGSISTEMASONLINE.git](https://github.com/gpjgabriel/AGSISTEMASONLINE.git)  
-cd AGSISTEMASONLINE  
-  
+Siga os passos abaixo para configurar e executar o projeto localmente.
 
-### 3. Instalar Dependências  
+### 1. Pré-requisitos
 
-npm install  
-# ou  
-yarn install  
-# ou  
-pnpm install  
+- [Node.js](https://nodejs.org/) (v18 ou superior)
+- [Git](https://git-scm.com/)
+- [Docker] Para o DB PostgreSQL (https://www.docker.com/products/docker-desktop/)
 
+### 2. Clonar o Repositório
 
-### 4. Configurar Variáveis de Ambiente  
+```bash
+git clone [https://github.com/gpjgabriel/AGSISTEMASONLINE.git](https://github.com/gpjgabriel/AGSISTEMASONLINE.git)
+cd AGSISTEMASONLINE
+```
 
-Crie um arquivo .env na raiz do projeto:  
+### 3. Instalar Dependências
 
-touch .env  
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
 
-Copie o conteúdo do .env.example  
+### 4. Configurar Variáveis de Ambiente
 
-### 5. Configurar o Banco de Dados (Prisma)  
+Crie um arquivo .env na raiz do projeto e o conteúdo do .env.example :
 
-Execute as "migrations" do Prisma para criar todas as tabelas no seu banco de dados:  
+```bash
+touch .env
+cp .env.example .env
+```
 
-npx prisma migrate dev  
+### 5. Configurar o Banco de Dados (Prisma)
 
-(Opcional, se você criar um seed) Popule o banco com dados de teste:  
+Execute o comando docker run presente dentro do arquivo .env no terminal (o comando está comentado, retire o # no ínicio do comando)
 
-npx prisma db seed  
+```bash
+docker run --name networking-db -e...
+```
 
-Executar o Projeto:  
+### 5. Configurar o Banco de Dados (Prisma)
 
-npm run dev  
+Execute as "migrations" do Prisma para criar todas as tabelas no seu banco de dados:
 
-## 🧪 Executando os Testes  
+```bash
+npx prisma migrate dev
+```
 
-npm run test  
+(Opcional, se você criar um seed) Popule o banco com dados de teste:
 
+```bash
+npx prisma db seed
+```
 
+Executar o Projeto:
 
+```bash
+npm run dev
+```
 
+- A aplicação estará disponível em [http://localhost:3000](http://localhost:3000)
 
+Rotas principais:
 
+- Formulário de Intenção: [http://localhost:3000/apply](http://localhost:3000/apply)
+
+- Área do Administrador: [http://localhost:3000/applications](http://localhost:3000/applications)
+
+- Sistema de Indicações: [http://localhost:3000/referrals](http://localhost:3000/referrals)
+
+## 🧪 Executando os Testes
+
+```bash
+npm run test
+```

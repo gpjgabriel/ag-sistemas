@@ -13,7 +13,7 @@ O objetivo deste projeto é implementar uma plataforma para gestão de grupos de
   - [x] Arquitetura (ARQUITETURA.md)
   - [x] Módulo Obrigatório: Fluxo de Admissão de Membros
   - [x] Módulo Opcional: (A)
-  - [ ] Módulo Opcional: (B) : _Em desenvolvimento_
+  - [x] Módulo Opcional: (B) : _Em desenvolvimento_
   - [x] Testes (Unitários e Integração)
 
 ---

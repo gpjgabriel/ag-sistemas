@@ -46,22 +46,29 @@ const statusClasses: { [key in ReferralStatus]: string } = {
   REJECTED: "bg-red-100 text-red-800",
 };
 
-const CURRENT_USER_ID = process.env.NEXT_PUBLIC_SIMULATED_USER_ID || "";
-
 export default function ReferralManager() {
   const [allReferrals, setAllReferrals] = useState<FullReferral[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
-    loadReferrals();
+    const userId = process.env.NEXT_PUBLIC_SIMULATED_USER_ID || null;
+    setCurrentUserId(userId);
+
+    if (userId) {
+      loadReferrals(userId);
+    } else {
+      console.error("ID do usuário simulado não encontrado no .env");
+      setLoading(false);
+    }
   }, []);
 
-  const loadReferrals = async () => {
+  const loadReferrals = async (userId: string) => {
     try {
       setLoading(true);
-      const data = await getMemberReferrals(CURRENT_USER_ID);
+      const data = await getMemberReferrals(userId);
       setAllReferrals(data);
     } catch (err: any) {
       toast.current?.show({
@@ -131,10 +138,10 @@ export default function ReferralManager() {
   };
 
   const sentReferrals = (allReferrals || []).filter(
-    (r) => r.sentBy.id === CURRENT_USER_ID
+    (r) => r.sentBy.id === currentUserId
   );
   const receivedReferrals = (allReferrals || []).filter(
-    (r) => r.receivedBy.id === CURRENT_USER_ID
+    (r) => r.receivedBy.id === currentUserId
   );
 
   return (

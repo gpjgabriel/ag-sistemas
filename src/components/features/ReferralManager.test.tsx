@@ -30,6 +30,8 @@ const mockedGetReferrals = getMemberReferrals as jest.Mock;
 const mockedUpdateStatus = updateReferralStatus as jest.Mock;
 
 const CURRENT_USER_ID = "3d251b00-3c81-438e-a20c-a08be0a62b01";
+process.env.NEXT_PUBLIC_SIMULATED_USER_ID = CURRENT_USER_ID;
+
 const mockUser = { id: CURRENT_USER_ID, name: "Membro Logado" };
 const mockPartner = { id: "partner-id", name: "Parceiro" };
 
@@ -66,6 +68,25 @@ describe("ReferralManager", () => {
     mockedUpdateStatus.mockClear();
     mockToastShow.mockClear();
     mockedGetReferrals.mockResolvedValue(mockReferrals);
+  });
+
+  it("busca e exibe as indicações corretamente divididas nas abas", async () => {
+    render(<ReferralManager />);
+
+    await waitFor(() => {
+      expect(mockedGetReferrals).toHaveBeenCalledWith(CURRENT_USER_ID);
+    });
+
+    expect(
+      await screen.findByText("Cliente A", {}, { timeout: 5000 })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("tab", { name: /Recebidas \(1\)/i })
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("tab", { name: /Enviadas/i }));
+    expect(
+      await screen.findByText("Cliente B", {}, { timeout: 5000 })
+    ).toBeInTheDocument();
   });
 
   it("deve renderizar a aba 'Recebidas' como ativa por padrão (activeIndex 0)", async () => {
